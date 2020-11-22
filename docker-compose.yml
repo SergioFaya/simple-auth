@@ -1,0 +1,24 @@
+version: "3.1"
+
+services:
+  # instancia de db postgres persistente
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+    ports:
+      - 5432:5432
+    volumes:
+      - db-data:/var/lib/postgresql/data
+  # instancia de cache redis NO persistente
+  redis:
+    image: redis
+    restart: always
+    command: redis-server --requirepass example
+    ports:
+      - 6379:6379
+
+volumes:
+  db-data:
+    driver: local
